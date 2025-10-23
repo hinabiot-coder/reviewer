@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rehina — Good Luck!</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --panel: #fff;
+    --text: #2d3748;
+    --accent-pink: #f48fb1;
+    --accent-green: #4caf50;
+  }
+
+  body {
+    margin: 0; 
+    height: 100vh;
+    background: linear-gradient(135deg, #d7e9f7 0%, #ffffff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    color: var(--text);
+  }
+
+  .container {
+    background: var(--panel);
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    text-align: center;
+    max-width: 450px;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    margin-bottom: 0.2rem;
+    color: var(--accent-pink);
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 1.8rem;
+    color: #475569;
+  }
+
+  button {
+    background: var(--accent-green);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.35);
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background: #388e3c;
+  }
+
+  /* Surprise overlay */
+  .surprise {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 15, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    z-index: 1000;
+  }
+  .surprise.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card {
+    background: white;
+    border-radius: 18px;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3);
+    text-align: center;
+    max-width: 380px;
+    position: relative;
+  }
+
+  .card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+    color: var(--accent-green);
+  }
+
+  .card p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #4a5568;
+  }
+
+  .close-btn {
+    background: var(--accent-pink);
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(244, 143, 177, 0.4);
+  }
+  
+  /* Floating cherry blossoms and clovers */
+  .floating-emoji {
+    position: fixed;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 2px rgba(244,143,177,0.6));
+    font-size: 24px;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-120vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" role="main" aria-label="Good luck message">
+  <h1>Rehina</h1>
+  <p>Here's a little something for your exam day!</p>
+  <button id="openBtn" aria-haspopup="dialog" aria-controls="surprise">Open File</button>
+</div>
+
+<div class="surprise" id="surprise" role="dialog" aria-modal="true" aria-label="Good luck message">
+  <div class="card">
+    <h2>Good Luck, Dani! 🍀🌸</h2>
+    <p>Ulit na ha Tanauan, I believe in you! You've got this! 💖</p>
+    <button class="close-btn" id="closeBtn">Close</button>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById('openBtn');
+  const surprise = document.getElementById('surprise');
+  const closeBtn = document.getElementById('closeBtn');
+
+  openBtn.addEventListener('click', () => {
+    surprise.classList.add('show');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    surprise.classList.remove('show');
+  });
+
+  surprise.addEventListener('click', (e) => {
+    if(e.target === surprise){
+      surprise.classList.remove('show');
+    }
+  });
+
+  // Floating emojis creation
+  function createFloatingEmoji(emoji, durationRange, sizeRange) {
+    const elem = document.createElement('div');
+    elem.textContent = emoji;
+    elem.classList.add('floating-emoji');
+    elem.style.left = Math.random() * 100 + 'vw';
+    elem.style.fontSize = (sizeRange[0] + Math.random() * (sizeRange[1] - sizeRange[0])) + 'px';
+    const duration = durationRange[0] + Math.random() * (durationRange[1] - durationRange[0]);
+    elem.style.animation = `floatUp ${duration}s linear forwards`;
+    document.body.appendChild(elem);
+    setTimeout(() => {
+      elem.remove();
+    }, duration * 1000);
+  }
+
+  // Create continuous floating cherries and clovers
+  setInterval(() => {
+    createFloatingEmoji('🌸', [6, 12], [20, 30]);
+    createFloatingEmoji('🍀', [8, 14], [18, 28]);
+  }, 700);
+</script>
+
+</body>
+</html>
